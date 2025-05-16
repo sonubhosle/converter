@@ -1,0 +1,319 @@
+.header {
+    width: 100%;
+    height: 100px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    padding: 0px 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+}
+
+.header .left_logo a {
+    color: #004461;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 25px;
+    text-decoration: none;
+}
+
+.header .left_logo .logo_icon{
+    background: #e899d0;
+    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
+    color: #fff;
+    font-weight: 500;
+    font-size: 17px;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.center_menu {
+    background-color: rgb(243, 243, 243);
+    height: 55px;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0px 2%;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* For Safari */
+    border: 1px solid #dbdbdb;
+}
+
+
+/* Navigation Links */
+.header .center_menu {
+    display: flex;
+    gap: 1.7rem;
+}
+
+.center_menu .nav_link {
+    position: relative;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    z-index: 10;
+    font-size: 18px;
+
+}
+
+.center_menu .nav_link:hover {
+    color: #975FEC;
+}
+
+
+
+/* Mobile Menu */
+.mobile_menu {
+    position: fixed;
+    width: 400px;
+    top: 0;
+    left: -1000px;
+    height: 100Vh;
+    background: white;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s ease;
+}
+
+.mobile_item {
+    margin-bottom: 1rem;
+}
+
+.mobile_menu.open {
+    display: flex;
+    opacity: 9;
+    visibility: visible;
+
+    left: 0px;
+}
+
+
+.mobile_menu .button-group-two {
+    display: flex;
+    border-radius: 50px;
+    padding: 5px;
+    gap: 5px;
+    background: #f7e1f2;
+    background: linear-gradient(125deg, rgba(247, 225, 242, 1) 0%, rgba(238, 236, 253, 1) 41%);
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0);
+    width: fit-content;
+    width: 100% !important;
+}
+
+
+.mobile_menu .button-group-two .btn-signin-two {
+    background-color: white;
+    border: 1px solid #CFDBF6;
+    padding: 15px 50px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+    transition: 0.5s ease;
+    box-shadow: rgba(0, 0, 0, 0.021) 0px 0px 5px 0px;
+}
+
+.mobile_menu .button-group-two .btn-signin-two:hover {
+    background-color: #f7f3fa;
+}
+
+.mobile_menu .button-group-two .btn-started-two {
+    background: #e899d0;
+    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
+    border: 1px solid #fff;
+    padding: 15px 50px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+
+
+
+
+.button-group {
+    display: flex;
+    border-radius: 50px;
+    padding: 5px;
+    gap: 5px;
+    background: #f7e1f2;
+    background: linear-gradient(125deg, rgba(247, 225, 242, 1) 0%, rgba(238, 236, 253, 1) 41%);
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0);
+    width: fit-content;
+}
+
+
+.btn-signin {
+    background-color: white;
+    border: 1px solid #CFDBF6;
+    padding: 12px 18px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 17px;
+    transition: 0.5s ease;
+    box-shadow: rgba(0, 0, 0, 0.021) 0px 0px 5px 0px;
+}
+
+.btn-signin:hover {
+    background-color: #f7f3fa;
+}
+
+.btn-started {
+    background: #e899d0;
+    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
+    border: 1px solid #fff;
+    padding: 12px 18px;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: 500;
+    font-size: 17px;
+}
+
+
+/* Hamburger Icon */
+.menu_icon {
+    opacity: 0;
+    visibility: hidden;
+    cursor: pointer;
+    position: absolute;
+    right: -100px;
+}
+
+
+
+@media (max-width: 1024px) {
+    .header {
+        padding: 0px 2%;
+    }
+}
+
+/* Responsive */
+@media (max-width: 991px) {
+    .header {
+        padding: 0px 3%;
+    }
+
+    .center_menu {
+        opacity: 0;
+        visibility: hidden;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    .mobile_menu .mobile_logo{
+        border-bottom: 1px solid #CFDBF6;
+        padding: 15px 15px;
+    }
+
+    .mobile_menu .mobile_logo a{
+        color: #004461;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 25px;
+        text-decoration: none;
+    }
+
+    .mobile_menu  .items{
+        padding: 20px 15px;
+    }
+    .mobile_menu .mobile_link{
+        display: flex;
+        align-items: center;
+        padding:8px 0px ;
+        position: relative;
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s ease;
+        z-index: 10;
+        font-size: 17px;
+        gap: 6px;
+    }
+
+    .mobile_menu .mobile_link:hover {
+        color: #975FEC;
+    }
+    .mobile_menu .center_btns{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        position: relative;
+        padding: 20px 15px;
+        border-top:1px solid #CFDBF6 ;
+    }
+    .button-group-two {
+        display: flex;
+
+    }
+
+
+    .button-group {
+        margin-right: 70px;
+    }
+
+
+
+    /* Hamburger Icon */
+    .menu_icon {
+        opacity: 3;
+        visibility: visible;
+        cursor: pointer;
+        position: absolute;
+        right: 2%;
+        background-color: #fff;
+        padding: 10px 13px;
+        border-radius: 10px;
+        transition: 0.5s ease;
+        border: 1px solid #CFDBF6;
+        box-shadow: rgba(0, 0, 0, 0.021) 5px 5px 10px 0px;
+
+    }
+
+    .menu_icon:hover {
+        background: #e899d0;
+        background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
+        border: 1px solid #fff;
+        color: #fff !important;
+    }
+
+}
+
+@media(max-width:576px){
+    .button-group{
+        display: none;
+    }
+}

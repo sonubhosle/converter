@@ -1,0 +1,43 @@
+@import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900,100italic,200italic,300italic,italic,500italic,600italic,700italic,800italic,900italic);
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter',sans-serif;
+
+
+}
+
+html,body{
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #F3F4FA;
+  background: #F3F4FA;
+background: linear-gradient(357deg, rgba(243, 244, 250, 1) 0%,#CFDBF6 100%);
+}
+
+.home_section{
+  padding: 0px 4%;
+}
+
+.blue{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  background-color: #f3b3ff;
+}
+
+.red{
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  filter: blur(120px);
+  z-index: 0;
+  background-color: #b3e5fc;
+}
+
