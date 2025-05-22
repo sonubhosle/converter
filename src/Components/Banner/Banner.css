@@ -1,0 +1,49 @@
+.banner{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    padding: 50px 0px;
+    line-height: 50px;
+}
+.banner h2{
+    font-weight: 800;
+    font-size: 50px;
+}
+
+.banner p{
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.banner .btn_explore{
+    background: #727CF5;
+    background: linear-gradient(316deg,#727CF5 75%, rgba(237, 221, 83, 1) 100%);  
+    padding: 5px 20px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #fff;
+    text-decoration: none;
+    font-size: 20px;
+   border-radius: 4px;
+   box-shadow: rgba(114, 125, 245, 0.363) 5px 5px 15px 0px;
+   display: flex;
+   align-items: center;
+   gap: 10px;
+}
+
+.banner .btn_explore .spinner{
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin{
+    0%{
+      transform: rotate(0deg);
+    }
+  
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+  

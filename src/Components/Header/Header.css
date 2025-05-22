@@ -1,6 +1,6 @@
 .header {
     width: 100%;
-    height: 100px;
+    height: 80px;
     position: sticky;
     top: 0;
     left: 0;
@@ -9,12 +9,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-
-}
-
+    z-index: 1000;
+    background-color: #fff;
+  }
+  
 .header .left_logo a {
-    color: #004461;
+    color: #727CF5;
     font-weight: 700;
     display: flex;
     align-items: center;
@@ -24,9 +24,8 @@
 }
 
 .header .left_logo .logo_icon{
-    background: #e899d0;
-    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
-    color: #fff;
+    background: #727CF5;
+    background: linear-gradient(316deg,#727CF5 75%, rgba(237, 221, 83, 1) 100%);    color: #fff;
     font-weight: 500;
     font-size: 17px;
     width: 50px;
@@ -34,11 +33,25 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 10px;
+    border-radius: 50%;
 }
 
+.spinner{
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin{
+    0%{
+      transform: rotate(0deg);
+    }
+  
+    100%{
+      transform: rotate(360deg);
+    }
+  }
+  
+
 .center_menu {
-    background-color: rgb(243, 243, 243);
     height: 55px;
     border-radius: 30px;
     display: flex;
@@ -46,8 +59,7 @@
     padding: 0px 2%;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    /* For Safari */
-    border: 1px solid #dbdbdb;
+
 }
 
 
@@ -69,7 +81,7 @@
 }
 
 .center_menu .nav_link:hover {
-    color: #975FEC;
+    color: #727CF5;
 }
 
 
@@ -135,9 +147,8 @@
 }
 
 .mobile_menu .button-group-two .btn-started-two {
-    background: #e899d0;
-    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
-    border: 1px solid #fff;
+    background: #727CF5;
+    background: linear-gradient(316deg,#727CF5 75%, rgba(237, 221, 83, 1) 100%);    border: 1px solid #fff;
     padding: 15px 50px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;
@@ -183,12 +194,12 @@
 
 .btn-signin:hover {
     background-color: #f7f3fa;
+    color: #727CF5;
 }
 
 .btn-started {
-    background: #e899d0;
-    background: linear-gradient(160deg, #952AE1 0%, rgba(136, 103, 231, 1) 17%, rgba(91, 59, 225, 1) 98%);
-    border: 1px solid #fff;
+    background: #727CF5;
+    background: linear-gradient(316deg,#727CF5 75%, rgba(237, 221, 83, 1) 100%);    border: 1px solid #fff;
     padding: 12px 18px;
     border-top-right-radius: 30px;
     border-bottom-right-radius: 30px;

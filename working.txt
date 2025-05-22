@@ -1,0 +1,249 @@
+//Script 
+
+const SHEET_ID = '1I4gsJi9nY5CuO1n8sJ-EiWbewT5FwAwx7PK3MfmmPIs';
+const DOC_TEMPLATE_ID = '15E1u9ueLHE_omAV7HWnBKFfUm6uH-7VZX-mdYf3eatg';
+
+function doGet(e) {
+  try {
+    const sheet = SpreadsheetApp.openById(SHEET_ID).getSheets()[0];
+    const data = sheet.getDataRange().getValues();
+    const headers = data[0];
+
+    const records = data.slice(1).map(row => {
+      let obj = {};
+      headers.forEach((key, i) => obj[key.toLowerCase()] = row[i]);
+      return obj;
+    });
+
+    return ContentService.createTextOutput(JSON.stringify(records))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'error',
+      message: err.message
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function doPost(e) {
+  try {
+    const payload = JSON.parse(e.postData.contents);
+    const emails = payload.emails;
+
+    let sentCount = 0;
+
+    emails.forEach(user => {
+      const name = user.name;
+      const email = user.email;
+
+      const pdf = generateOfferLetter(name);
+
+      GmailApp.sendEmail(email,
+        'Your Internship Offer Letter',
+        `Dear ${name},\n\nPlease find attached your internship offer letter.\n\nRegards,\nHR Team`,
+        { attachments: [pdf] }
+      );
+
+      sentCount++;
+    });
+
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'success',
+      sent: sentCount
+    })).setMimeType(ContentService.MimeType.JSON);
+
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({
+      status: 'error',
+      message: err.message
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+}
+
+function generateOfferLetter(name) {
+  if (!name) {
+    throw new Error("Name is missing or invalid");
+  }
+
+  const copiedFile = DriveApp.getFileById(DOC_TEMPLATE_ID).makeCopy(`Offer_Letter_${name}_${new Date().toISOString()}`);
+  const doc = DocumentApp.openById(copiedFile.getId());
+  const body = doc.getBody();
+
+  // Ensure replacement text is string and not null/undefined
+  const safeName = String(name);
+
+  body.replaceText('{{name}}', safeName);
+
+  doc.saveAndClose();
+
+  return copiedFile.getAs(MimeType.PDF);
+}
+
+
+// Frontend 
+
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import "./Send_Email.css";
+
+const FETCH_RECORDS_URL = "https://script.google.com/macros/s/AKfycbxPIOyZ7SAZ1LA5rPD0Gfn3PTvWLPWmz5XnmFgV53Ni44sHrar6VaaBTvsvMJZ3ua2o/exec";
+const SEND_OFFERS_URL = "http://localhost:4000/send-offers";
+
+const Email_Send = () => {
+  const [records, setRecords] = useState([]);
+  const [selected, setSelected] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(FETCH_RECORDS_URL)
+      .then((res) => setRecords(res.data))
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        showStatus("❌ Error fetching records.", false);
+      });
+  }, []);
+
+  const toggleSelection = (record) => {
+    const isSelected = selected.some((s) => s.email === record.email);
+    if (isSelected) {
+      setSelected(selected.filter((s) => s.email !== record.email));
+    } else {
+      setSelected([...selected, record]);
+    }
+  };
+
+  const showStatus = (message, success) => {
+    setStatusMessage(message);
+    setIsSuccess(success);
+    setShowPopup(true);
+    setTimeout(() => setShowPopup(false), 4000);
+  };
+
+  const sendOffers = async () => {
+    if (selected.length === 0) {
+      showStatus("⚠️ Select at least one user.", false);
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const res = await axios.post(SEND_OFFERS_URL, { emails: selected });
+      const result = res.data;
+
+      if (result.status === "success") {
+        showStatus(`✅ Sent ${result.sent} offer letters successfully.`, true);
+        setSelected([]);
+      } else {
+        throw new Error(result.message);
+      }
+    } catch (err) {
+      console.error("Send error:", err);
+      showStatus(`❌ Failed to send: ${err.message}`, false);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="container">
+      <h2 className="title">Internship Offer Sender</h2>
+
+      {records.length === 0 ? (
+        <div className="loading">
+          <div className="loading-heading">Loading records...</div>
+        </div>
+      ) : (
+        <table className="records-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+          <tbody>
+            {records.map((r, i) => (
+              <tr key={i} className={selected.some((s) => s.email === r.email) ? "selected-row" : ""}>
+               
+                <td>{r.name}</td>
+                <td>{r.email}</td>
+                <td>
+                  <label className="name-label">
+                    <input className="custom-checkbox"
+                      type="checkbox"
+                      checked={selected.some((s) => s.email === r.email)}
+                      onChange={() => toggleSelection(r)}
+                    />
+                    
+                  </label>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+
+      <button
+        onClick={sendOffers}
+        disabled={loading}
+        className="send-button"
+      >
+        {loading ? "Sending" : "Send"}
+      </button>
+
+      {showPopup && (
+        <div className={`popup ${isSuccess ? "success" : "error"}`}>
+          {statusMessage}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Email_Send;
+
+
+// Server 
+
+const express = require("express");
+const cors = require("cors");
+const fetch = require("node-fetch");
+
+const app = express();
+const PORT = 4000;
+
+const GOOGLE_APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxPIOyZ7SAZ1LA5rPD0Gfn3PTvWLPWmz5XnmFgV53Ni44sHrar6VaaBTvsvMJZ3ua2o/exec";
+
+app.use(cors());
+app.use(express.json());
+
+app.post("/send-offers", async (req, res) => {
+  try {
+    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(req.body),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`Google Script Error: ${errorText}`);
+    }
+
+    const data = await response.json();
+    res.json(data);
+  } catch (error) {
+    console.error("Proxy Error:", error);
+    res.status(500).json({ status: "error", message: error.message });
+  }
+});
+
+app.listen(PORT, () => console.log(`Proxy server running on http://localhost:${PORT}`));
+
+

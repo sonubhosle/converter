@@ -9,7 +9,9 @@ const Not_Found = lazy(() => import('./Components/Not_Found/Not_Found'));
 const About = lazy(() => import('./Pages/About/About'));
 const Contact = lazy(() => import('./Pages/Contact/Contact'));
 const Help = lazy(() => import('./Pages/Help/Help'));
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Footer from './Components/Footer/Footer';
 
 const App = () => {
   return (
@@ -20,9 +22,11 @@ const App = () => {
         <Route path='/converters' element={<Converters/>} />
         <Route path='/about' element={<About/>} />
         <Route path='/contact' element={<Contact/>} />
-        <Route path='/help' element={<Help/>} />
+        <Route path='/tools' element={<Help/>} />
         <Route path='/*' element={<Not_Found/>} />
       </Routes>
+      <ToastContainer/>
+      <Footer/>
     </Suspense>
   )
 }
